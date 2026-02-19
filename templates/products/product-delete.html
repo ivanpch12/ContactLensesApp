@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="editPage">
+    <form method="post">
+        <fieldset>
+            <legend>Delete Product</legend>
+            <div class="container">
+                {{ form }}
+                {% csrf_token %}
+                <button class="delete-product" type="submit">Delete</button>
+                <a href="{% url 'products:list' %}">Cancel</a>
+            </div>
+        </fieldset>
+    </form>
+</section>
+{% endblock %}

@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -13,6 +14,10 @@ class Product(models.Model):
     price = models.DecimalField(
         max_digits=6,
         decimal_places=2,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(1000)
+        ]
     )
 
     description = models.TextField(
