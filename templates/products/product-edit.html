@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="editPage">
+    <form method="post">
+        <fieldset>
+            <legend>Edit Product</legend>
+            <div class="container">
+                {{ form }}
+                {% csrf_token %}
+                <button class="edit-product" type="submit">Edit Product</button>
+            </div>
+        </fieldset>
+    </form>
+</section>
+
+{% endblock %}

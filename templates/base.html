@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Lenses App</title>
+</head>
+<body>
+    <header>
+        <h1>Contact Lenses App</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'products:list' %}">Products</a> </li>
+                <li><a href="{% url 'products:create' %}">Create Product</a> </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Contact Lenses App</p>
+    </footer>
+</body>
+</html>
