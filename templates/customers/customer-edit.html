@@ -5,12 +5,11 @@
 <section class="editPage">
     <form method="post">
         <fieldset>
-            <legend>Delete Product</legend>
+            <legend>Edit Customer</legend>
             <div class="container">
                 {{ form }}
                 {% csrf_token %}
-                <button class="delete-product" type="submit">Delete</button>
-                <a href="{% url 'products:list' %}">Cancel</a>
+                <button class="editCustomer" type="submit">Edit Customer</button>
             </div>
         </fieldset>
     </form>
