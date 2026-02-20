@@ -9,7 +9,7 @@
             <div class="container">
                 {{ form }}
                 {% csrf_token %}
-                <button class="delete-customer" type="submit">Delete</button>
+                <button class="deleteCustomer" type="submit">Delete</button>
                 <a href="{% url 'customers:list' %}">Cancel</a>
             </div>
         </fieldset>

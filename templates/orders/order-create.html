@@ -5,11 +5,11 @@
 <section class="createPage">
     <form method="post">
         <fieldset>
-            <legend>Add Customer</legend>
+            <legend>New Order</legend>
             <div class="container">
                 {{ form }}
                 {% csrf_token %}
-                <button class="createCustomer" type="submit">Create new Customer</button>
+                <button class="createOrder" type="submit">Create new Order</button>
             </div>
         </fieldset>
     </form>

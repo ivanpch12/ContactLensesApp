@@ -2,14 +2,15 @@
 
 {% block content %}
 
-<section class="createPage">
+<section class="editPage">
     <form method="post">
         <fieldset>
-            <legend>Add Customer</legend>
+            <legend>Delete Order</legend>
             <div class="container">
                 {{ form }}
                 {% csrf_token %}
-                <button class="createCustomer" type="submit">Create new Customer</button>
+                <button class="deleteOrder" type="submit">Delete</button>
+                <a href="{% url 'orders:list' %}">Cancel</a>
             </div>
         </fieldset>
     </form>

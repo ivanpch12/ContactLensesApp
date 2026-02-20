@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Order #{{ order.id }}</h2>
+
+<div>
+    <p><strong>Customer:</strong> {{ order.customer.first_name }} {{ order.customer.last_name }}</p>
+    <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Products:</strong></p>
+    <ul>
+        {% for product in order.products.all %}
+            <li>{{ product.name }} - €{{ product.price }}</li>
+        {% empty %}
+            <li>No products in this order.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'orders:edit' order.pk %}">Edit</a> |
+    <a href="{% url 'orders:delete' order.pk %}">Delete</a> |
+    <a href="{% url 'orders:list' %}">Back to orders</a>
+</div>
+
+{% endblock %}
