@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<section class="createPage">
+<section class="editPage">
     <form method="post">
         <fieldset>
-            <legend>Add Customer</legend>
+            <legend>Edit Order</legend>
             <div class="container">
                 {{ form }}
                 {% csrf_token %}
-                <button class="createCustomer" type="submit">Create new Customer</button>
+                <button class="editOrder" type="submit">Edit Order</button>
             </div>
         </fieldset>
     </form>
