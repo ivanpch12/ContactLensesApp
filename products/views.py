@@ -8,13 +8,13 @@ from products.models import Product
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductCreateForm
-    template_name = 'products/product-create.html'
+    template_name = 'products/product-create-edit.html'
     success_url = reverse_lazy('products:list')
 
 class ProductEditView(UpdateView):
     model = Product
     form_class = ProductEditForm
-    template_name = 'products/product-edit.html'
+    template_name = 'products/product-create-edit.html'
     success_url = reverse_lazy('products:list')
 
 class ProductDeleteView(DeleteView):

@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
 
 <h2>Customers</h2>
-<a class="btn btn-success mb-3" href="{% url 'customers:create' %}">Create Customer</a>
+<a class="btn btn-success mb-3" href="{% url 'customers:create' %}">Add new Customer</a>
 
 <ul class="list-group">
     {% for customer in customers %}

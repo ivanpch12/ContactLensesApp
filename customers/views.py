@@ -8,14 +8,14 @@ from customers.models import Customer
 class CustomerCreateView(CreateView):
     model = Customer
     form_class = CustomerCreateForm
-    template_name = 'customers/customer-create.html'
+    template_name = 'customers/customer-create-edit.html'
     success_url = reverse_lazy('customers:list')
 
 
 class CustomerEditView(UpdateView):
     model = Customer
     form_class = CustomerEditForm
-    template_name = 'customers/customer-edit.html'
+    template_name = 'customers/customer-create-edit.html'
     success_url = reverse_lazy('customers:list')
 
 
