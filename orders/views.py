@@ -8,14 +8,14 @@ from orders.models import Order
 class OrderCreateView(CreateView):
     model = Order
     form_class = OrderCreateForm
-    template_name = 'orders/order-create.html'
+    template_name = 'orders/order-create-edit.html'
     success_url = reverse_lazy('orders:list')
 
 
 class OrderEditView(UpdateView):
     model = Order
     form_class = OrderEditForm
-    template_name = 'orders/order-edit.html'
+    template_name = 'orders/order-create-edit.html'
     success_url = reverse_lazy('orders:list')
 
 

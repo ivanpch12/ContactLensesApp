@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block content %}
-
 <div class="container mt-4">
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title">{{ form.instance.pk|yesno:"Edit Order,Add Order" }}</h2>
+            <h2 class="card-title">{{ form.instance.pk|yesno:"Edit Customer,New Customer" }}</h2>
+
             <form method="post">
                 {% csrf_token %}
 
@@ -23,12 +23,11 @@
                 {% endfor %}
 
                 <button class="btn btn-success" type="submit">
-                    {{ form.instance.pk|yesno:"Update Order,Create Order" }}
+                    {{ form.instance.pk|yesno:"Update Customer,Create Customer" }}
                 </button>
-                <a class="btn btn-secondary" href="{% url 'orders:list' %}">Cancel</a>
+                <a class="btn btn-secondary" href="{% url 'customers:list' %}">Cancel</a>
             </form>
         </div>
     </div>
 </div>
-
 {% endblock %}
