@@ -2,18 +2,14 @@
 
 {% block content %}
 
-<section class="editPage">
-    <form method="post">
-        <fieldset>
-            <legend>Delete Product</legend>
-            <div class="container">
-                {{ form }}
-                {% csrf_token %}
-                <button class="delete-product" type="submit">Delete</button>
-                <a href="{% url 'products:list' %}">Cancel</a>
-            </div>
-        </fieldset>
-    </form>
-</section>
+<h2>Delete Product</h2>
+<form method="post">
+    {% csrf_token %}
+    <fieldset disabled>
+        {{ form.as_p }}
+    </fieldset>
+    <button class="btn btn-danger" type="submit">Confirm Delete</button>
+    <a class="btn btn-secondary" href="{% url 'products:list' %}">Cancel</a>
+</form>
 
 {% endblock %}

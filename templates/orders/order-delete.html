@@ -2,18 +2,33 @@
 
 {% block content %}
 
-<section class="editPage">
-    <form method="post">
-        <fieldset>
-            <legend>Delete Order</legend>
-            <div class="container">
-                {{ form }}
-                {% csrf_token %}
-                <button class="deleteOrder" type="submit">Delete</button>
-                <a href="{% url 'orders:list' %}">Cancel</a>
-            </div>
-        </fieldset>
-    </form>
-</section>
+<h2>Delete Order</h2>
+<form method="post">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label"><strong>Customer:</strong></label>
+        <p class="form-control-plaintext">{{ order.customer.first_name }} {{ order.customer.last_name }}</p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><strong>Status:</strong></label>
+        <p class="form-control-plaintext">{{ order.get_status_display }}</p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><strong>Products:</strong></label>
+        <ul class="list-group">
+            {% for product in order.product.all %}
+                <li class="list-group-item">{{ product.name }} - €{{ product.price }}</li>
+            {% empty %}
+                <li class="list-group-item">No products in this order.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <button class="btn btn-danger" type="submit">Confirm Delete</button>
+    <a class="btn btn-secondary" href="{% url 'orders:list' %}">Cancel</a>
+</form>
 
 {% endblock %}
