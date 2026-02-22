@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
-from orders.forms import OrderCreateForm, OrderEditForm
+from orders.forms import OrderCreateForm, OrderEditForm, OrderDeleteForm
 from orders.models import Order
 
 

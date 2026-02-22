@@ -2,17 +2,33 @@
 
 {% block content %}
 
-<section class="editPage">
-    <form method="post">
-        <fieldset>
-            <legend>Edit Customer</legend>
-            <div class="container">
-                {{ form }}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">{{ form.instance.pk|yesno:"Edit Customer,Add Customer" }}</h2>
+            <form method="post">
                 {% csrf_token %}
-                <button class="editCustomer" type="submit">Edit Customer</button>
-            </div>
-        </fieldset>
-    </form>
-</section>
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <button class="btn btn-success" type="submit">
+                    {{ form.instance.pk|yesno:"Update Customer,Create Customer" }}
+                </button>
+                <a class="btn btn-secondary" href="{% url 'customers:list' %}">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -2,13 +2,17 @@
 
 {% block content %}
 
-<h2>{{ product.name }}</h2>
-    <p>Type: {{ product.product_type }}</p>
-    <p>Price: €{{ product.price }}</p>
-    <p>Description: {{ product.description }}</p>
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="card-title">{{ product.name }}</h2>
+        <p class="card-text"><strong>Type:</strong> {{ product.product_type }}</p>
+        <p class="card-text"><strong>Price:</strong> €{{ product.price }}</p>
+        <p class="card-text"><strong>Description:</strong> {{ product.description }}</p>
+    </div>
+</div>
 
-    <a href="{% url 'products:edit' product.pk %}">Edit</a> |
-    <a href="{% url 'products:delete' product.pk %}">Delete</a> |
-    <a href="{% url 'products:list' %}">Back to list</a>
+<a class="btn btn-primary me-2" href="{% url 'products:edit' product.pk %}">Edit</a>
+<a class="btn btn-danger me-2" href="{% url 'products:delete' product.pk %}">Delete</a>
+<a class="btn btn-secondary" href="{% url 'products:list' %}">Back to list</a>
 
 {% endblock %}
