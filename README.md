@@ -19,7 +19,7 @@ The app provides full CRUD functionality, a **dashboard**, and a responsive inte
 
 ### 1️⃣ Clone the repository
 ```
-git clone <https://github.com/ivanpch12/ContactLensesApp>
+git clone https://github.com/ivanpch12/ContactLensesApp
 cd contact-lenses-app
 ```
 
