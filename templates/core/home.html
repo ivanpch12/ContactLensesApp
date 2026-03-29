@@ -7,6 +7,7 @@
     <p class="lead">Manage your Products, Customers, and Orders easily.</p>
 </div>
 
+{% if user.is_authenticated %}
 <div class="row g-4 mb-5">
     <div class="col-md-4">
         <a href="{% url 'products:list' %}" class="text-decoration-none text-dark">
@@ -38,5 +39,19 @@
         </a>
     </div>
 </div>
+
+{% if user.is_staff %}
+<div class="text-center mb-5">
+    <a href="{% url 'products:create' %}" class="btn btn-primary me-2">+ Product</a>
+    <a href="{% url 'customers:create' %}" class="btn btn-primary me-2">+ Customer</a>
+    <a href="{% url 'orders:create' %}" class="btn btn-primary">+ Order</a>
+</div>
+{% endif %}
+
+{% else %}
+<div class="alert alert-info text-center">
+    Please <a href="{% url 'login' %}">login</a> to see your dashboard and manage data.
+</div>
+{% endif %}
 
 {% endblock %}
