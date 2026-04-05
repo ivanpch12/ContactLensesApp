@@ -47,3 +47,24 @@ class CustomerDetailView(DetailView):
     model = Customer
     template_name = 'customers/customer-detail.html'
     context_object_name = 'customer'
+
+
+class CustomerProfileView(LoginRequiredMixin, UpdateView):
+    model = Customer
+    fields = ['first_name', 'last_name', 'email', 'phone', 'address']
+    template_name = 'customers/profile.html'
+
+    def get_object(self, queryset=None):
+        obj, created = Customer.objects.get_or_create(
+            user=self.request.user,
+            defaults={
+                'first_name': '',
+                'last_name': '',
+                'email': self.request.user.email or '',
+            }
+        )
+        print('DEBUG: Customer obj:', obj, 'Created:', created)
+        return obj
+
+    def get_success_url(self):
+        return reverse_lazy('customers:profile')

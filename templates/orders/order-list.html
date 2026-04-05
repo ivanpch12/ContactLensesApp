@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load user_groups %}
 
 
 {% block content %}
@@ -12,9 +13,14 @@
             <span>
                 {{ order.customer.first_name }} {{ order.customer.last_name }} - Status: {{ order.get_status_display }}
             </span>
-            {% include 'core/actions.html' with
-                edit_url=order.get_edit_url
-                delete_url=order.get_delete_url %}
+            {% if user|in_group:'Manager' or user|in_group:'Employee' %}
+                {% include 'core/actions.html' with
+                    edit_url=order.get_edit_url
+                    delete_url=order.get_delete_url %}
+            {% elif order.customer.user == user %}
+                {% include 'core/actions.html' with
+                    edit_url=order.get_edit_url %}
+            {% endif %}
         </li>
     {% empty %}
         <li class="list-group-item">No orders yet.</li>
@@ -22,7 +28,7 @@
 </ul>
 
 
-{% if user.is_authenticated and user.is_staff %}
+{% if user|in_group:'Manager' or user|in_group:'Customer' %}
     <a class="btn btn-success mt-3" href="{% url 'orders:create' %}">Create new Order</a>
 {% endif %}
 {% endblock %}

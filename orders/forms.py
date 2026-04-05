@@ -29,3 +29,5 @@ class OrderDeleteForm(OrderForm):
         for field in self.fields.values():
             field.widget.attrs['readonly'] = True
             field.widget.attrs['disabled'] = True
+
+

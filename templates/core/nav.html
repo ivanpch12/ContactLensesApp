@@ -1,3 +1,4 @@
+{% load user_groups %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
 
@@ -22,9 +23,15 @@
                     <a class="nav-link" href="{% url 'products:list' %}">Products</a>
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'customers:list' %}">Customers</a>
-                    </li>
+                    {% if user|in_group:'Customer' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'customers:profile' %}">Profile</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'customers:list' %}">Customers</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'orders:list' %}">Orders</a>
                     </li>
