@@ -39,6 +39,7 @@ PROJECT_APPS = [
     'orders',
     'core',
     'accounts',
+    'reviews'
 ]
 
 INSTALLED_APPS = [

@@ -1,33 +1,42 @@
 {% extends 'core/base.html' %}
+{% load user_groups %}
 
 
 {% block content %}
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <h2 class="card-title mb-3">Order #{{ order.id }}</h2>
-        <p class="card-text"><strong>Customer:</strong> {{ order.customer.first_name }} {{ order.customer.last_name }}</p>
-        <p class="card-text"><strong>Status:</strong> {{ order.get_status_display }}</p>
+<h2>Order Details</h2>
 
 
-        <p class="card-text mt-3"><strong>Products:</strong></p>
-        <ul class="list-group list-group-flush">
-            {% for product in order.product.all %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ product.name }}
-                    <span class="badge bg-primary rounded-pill">€{{ product.price }}</span>
-                </li>
-            {% empty %}
-                <li class="list-group-item">No products in this order.</li>
-            {% endfor %}
-        </ul>
+<div class="card shadow-sm">
+  <div class="card-body">
+
+    <h5 class="card-title">Order #{{ order.id }}</h5>
+
+    <p class="card-text">
+      <strong>Customer:</strong> {{ order.customer.first_name }} {{ order.customer.last_name }}
+    </p>
+
+
+    <p class="card-text">
+      <strong>Status:</strong> {{ order.get_status_display }}
+    </p>
+
+
+    <p class="card-text">
+      <strong>Products:</strong>
+      <ul>
+        {% for product in order.product.all %}
+          <li>{{ product.name }}</li>
+        {% endfor %}
+      </ul>
+    </p>
+
+
+    <div class="d-flex gap-2">
+      {% include 'core/actions.html' with edit_url=order.get_edit_url delete_url=order.get_delete_url %}
+      <a href="{% url 'orders:list' %}" class="btn btn-secondary">Back</a>
     </div>
+
+
+  </div>
 </div>
-
-
-{% include 'core/actions.html' with
-    edit_url=order.get_edit_url
-    delete_url=order.get_delete_url %}
-
-
-<a class="btn btn-secondary mt-2" href="{% url 'orders:list' %}">Back to orders</a>
 {% endblock %}

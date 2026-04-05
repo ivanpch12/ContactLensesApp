@@ -2,28 +2,25 @@ from django import forms
 from orders.models import Order
 
 
-class OrderForm(forms.ModelForm):
+class OrderCreateFullForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = [
-            'customer',
-            'product',
-            'status'
-        ]
+        fields = ['customer', 'product', 'status']
         widgets = {
             'product': forms.CheckboxSelectMultiple(),
         }
 
 
-class OrderCreateForm(OrderForm):
-    ...
+class OrderCreateCustomerForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['product']
+        widgets = {
+            'product': forms.CheckboxSelectMultiple(),
+        }
 
 
-class OrderEditForm(OrderForm):
-    ...
-
-
-class OrderDeleteForm(OrderForm):
+class OrderDeleteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
@@ -31,3 +28,13 @@ class OrderDeleteForm(OrderForm):
             field.widget.attrs['disabled'] = True
 
 
+class OrderFullForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['product', 'status']
+
+
+class OrderCustomerForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['product']

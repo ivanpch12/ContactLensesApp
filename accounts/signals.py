@@ -5,6 +5,6 @@ from django.dispatch import receiver
 
 @receiver(post_migrate)
 def create_user_groups(sender, **kwargs):
-    groups = ["Manager", "Employee"]
+    groups = ["Manager", "Employee", "Customer"]
     for group in groups:
         Group.objects.get_or_create(name=group)

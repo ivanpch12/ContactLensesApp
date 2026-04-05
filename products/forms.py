@@ -8,12 +8,12 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Enter Product Name'}),
-            'product_type': forms.TextInput(attrs={'placeholder': 'Enter Product Type'}),
             'description': forms.TextInput(attrs={'placeholder': 'Enter Product Description'}),
+            'lens_type': forms.Select(choices=Product.LensType.choices)
         }
         help_texts = {
             'name': 'Max 100 characters allowed',
-            'product_type': 'E.g., Soft, Hard'
+            'lens_type': 'Select lens duration'
         }
         error_messages = {
             'name': {

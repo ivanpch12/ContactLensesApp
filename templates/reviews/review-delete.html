@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<h2>Delete Review</h2>
+
+
+<form method="post">
+  {% csrf_token %}
+  <p>Are you sure?</p>
+  <button class="btn btn-danger">Delete</button>
+</form>
+
+
+{% endblock %}

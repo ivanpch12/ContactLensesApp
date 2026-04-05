@@ -1,27 +1,42 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
-from accounts.utils import is_manager, is_customer
-from orders.forms import OrderCreateForm, OrderEditForm
+from orders.forms import OrderFullForm, OrderCustomerForm, OrderCreateFullForm, \
+    OrderCreateCustomerForm
 from orders.models import Order
 
 
-class OrderCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
-    form_class = OrderCreateForm
     template_name = 'orders/order-create-edit.html'
-    success_url = reverse_lazy('orders:list')
 
-    def test_func(self):
-        return is_manager(self.request.user) or is_customer(self.request.user)
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if user.groups.filter(name__in=['Manager', 'Employee']).exists() or user.groups.filter(name='Customer').exists():
+            return super().dispatch(request, *args, **kwargs)
+        raise PermissionDenied
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.groups.filter(name__in=['Manager', 'Employee']).exists():
+            return OrderCreateFullForm
+        elif user.groups.filter(name='Customer').exists():
+            return OrderCreateCustomerForm
+        return OrderCreateFullForm
+
+    def form_valid(self, form):
+        if self.request.user.groups.filter(name='Customer').exists():
+            form.instance.customer = self.request.user.customer_profile
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('orders:list')
 
 
 class OrderEditView(LoginRequiredMixin, UpdateView):
     model = Order
-    fields = ['status', 'product']
     template_name = 'orders/order-create-edit.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -30,12 +45,19 @@ class OrderEditView(LoginRequiredMixin, UpdateView):
 
         if user.groups.filter(name__in=['Manager', 'Employee']).exists():
             return super().dispatch(request, *args, **kwargs)
-
-        if user.groups.filter(name='Customer').exists():
-            if order.customer.user == user:
-                return super().dispatch(request, *args, **kwargs)
+        if user.groups.filter(name='Customer').exists() and order.customer.user == user:
+            return super().dispatch(request, *args, **kwargs)
 
         raise PermissionDenied
+
+    def get_form_class(self):
+        user = self.request.user
+
+        if user.groups.filter(name__in=['Manager', 'Employee']).exists():
+            return OrderFullForm
+        if user.groups.filter(name='Customer').exists():
+            return OrderCustomerForm
+        return OrderFullForm
 
 
 class OrderDeleteView(LoginRequiredMixin, DeleteView):

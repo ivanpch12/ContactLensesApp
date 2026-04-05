@@ -1,21 +1,69 @@
 {% extends 'core/base.html' %}
+{% load user_groups %}
 
 
 {% block content %}
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <h2 class="card-title mb-3">{{ product.name }}</h2>
-        <p class="card-text"><strong>Type:</strong> {{ product.product_type }}</p>
-        <p class="card-text"><strong>Price:</strong> €{{ product.price }}</p>
-        <p class="card-text"><strong>Description:</strong> {{ product.description }}</p>
+<h2>Product Details</h2>
+
+
+<div class="card shadow-sm">
+  <div class="card-body">
+
+
+    <h5 class="card-title">{{ product.name }}</h5>
+
+
+    <p class="card-text">
+      <strong>Type:</strong> {{ product.lens_type }}
+    </p>
+
+
+    <p class="card-text">
+      <strong>Price:</strong> ${{ product.price }}
+    </p>
+
+
+    {% if product.description %}
+      <p class="card-text">
+        <strong>Description:</strong> {{ product.description }}
+      </p>
+    {% endif %}
+
+    <p><strong>Average rating:</strong> {{ product.average_rating|floatformat:1 }}/5</p>
+
+    <div class="d-flex gap-2">
+      {% include 'core/actions.html' with edit_url=product.get_edit_url delete_url=product.get_delete_url %}
+      <a href="{% url 'products:list' %}" class="btn btn-secondary">Back</a>
     </div>
+
+  </div>
 </div>
 
-
-{% include 'core/actions.html' with
-    edit_url=product.get_edit_url
-    delete_url=product.get_delete_url %}
+<h4 class="mt-4">Reviews</h4>
 
 
-<a class="btn btn-secondary mt-2" href="{% url 'products:list' %}">Back to list</a>
+{% for review in product.reviews.all %}
+  <div class="card mb-2 p-2">
+    <strong>{{ review.user }}</strong> - {{ review.rating }}/5
+    <p>{{ review.comment }}</p>
+
+
+    {% if user == review.user and user|in_group:'Customer' or user|in_group:'Manager' %}
+      <a href="{% url 'reviews:edit' review.pk %}">Edit</a>
+      <a href="{% url 'reviews:delete' review.pk %}">Delete</a>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>No reviews yet.</p>
+{% endfor %}
+
+
+{% if user.is_authenticated and user|in_group:'Customer' %}
+  <a class="btn btn-success mt-2"
+     href="{% url 'reviews:create' product.pk %}">
+     Add Review
+  </a>
+{% endif %}
+
+
 {% endblock %}
