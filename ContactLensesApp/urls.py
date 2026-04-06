@@ -23,6 +23,10 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('customers/', include('customers.urls')),
     path('orders/', include('orders.urls')),
+    path('reviews/', include('reviews.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('api/', include('products.api.urls')),
+    path('api/', include('orders.api.urls')),
 ]
 
 handler404 = 'core.views.custom_404'

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from customers.models import Customer
 from products.models import Product
@@ -39,6 +40,12 @@ class Order(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
+
+    def get_edit_url(self):
+        return reverse('orders:edit', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('orders:delete', kwargs={'pk': self.pk})
 
     def __str__(self):
         return f'Order {self.id} for {self.customer}'

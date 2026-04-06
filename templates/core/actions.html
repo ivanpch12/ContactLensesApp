@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+<div class="d-flex gap-2">
+    {% if edit_url %}
+        <a class="btn btn-outline-primary" href="{{ edit_url }}">Edit</a>
+    {% endif %}
+    {% if delete_url %}
+        <a class="btn btn-outline-danger" href="{{ delete_url }}">Delete</a>
+    {% endif %}
+</div>
+{% endif %}

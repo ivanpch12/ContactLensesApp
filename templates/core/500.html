@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="display-4 text-warning">500</h1>
+    <h3>Server Error</h3>
+    <p class="lead">
+        We're currently unavailable. Maintenance in progress.
+    </p>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">
+        Back to Home
+    </a>
+</div>
+{% endblock %}

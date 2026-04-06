@@ -1,25 +1,33 @@
 {% extends 'core/base.html' %}
+{% load user_groups %}
+
 
 {% block content %}
-
 <h2>Orders</h2>
-<a class="btn btn-success mb-3" href="{% url 'orders:create' %}">Create new Order</a>
+
 
 <ul class="list-group">
-    {% for order in orders %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="{% url 'orders:detail' order.pk %}">Order #{{ order.id }}</a>
-            <span>
-                {{ order.customer.first_name }} {{ order.customer.last_name }} - Status: {{ order.get_status_display }}
-            </span>
-            <span>
-                <a class="btn btn-sm btn-primary me-1" href="{% url 'orders:edit' order.pk %}">Edit</a>
-                <a class="btn btn-sm btn-danger" href="{% url 'orders:delete' order.pk %}">Delete</a>
-            </span>
-        </li>
-    {% empty %}
-        <li class="list-group-item">No orders yet.</li>
-    {% endfor %}
+ {% for order in orders %}
+   <li class="list-group-item d-flex justify-content-between align-items-center hover-card shadow-sm mb-2">
+     <div>
+       <a href="{% url 'orders:detail' order.pk %}">
+         Order #{{ order.id }}
+       </a>
+       <div class="small text-muted">
+         {{ order.customer.first_name }} {{ order.customer.last_name }} - Status: {{ order.get_status_display }}
+       </div>
+     </div>
+     {% include 'core/actions.html' with edit_url=order.get_edit_url delete_url=order.get_delete_url %}
+   </li>
+ {% empty %}
+   <li class="list-group-item">No orders yet.</li>
+ {% endfor %}
 </ul>
+
+
+{% if user|in_group:'Manager' or user|in_group:'Employee' %}
+ <a class="btn btn-success mt-3" href="{% url 'orders:create' %}">Create New Order</a>
+{% endif %}
+
 
 {% endblock %}

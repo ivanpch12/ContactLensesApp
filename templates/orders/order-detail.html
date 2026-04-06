@@ -1,25 +1,42 @@
 {% extends 'core/base.html' %}
+{% load user_groups %}
+
 
 {% block content %}
+<h2>Order Details</h2>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <h2 class="card-title">Order #{{ order.id }}</h2>
-        <p class="card-text"><strong>Customer:</strong> {{ order.customer.first_name }} {{ order.customer.last_name }}</p>
-        <p class="card-text"><strong>Status:</strong> {{ order.get_status_display }}</p>
-        <p class="card-text"><strong>Products:</strong></p>
-        <ul>
-            {% for product in order.product.all %}
-                <li>{{ product.name }} - €{{ product.price }}</li>
-            {% empty %}
-                <li>No products in this order.</li>
-            {% endfor %}
-        </ul>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+
+    <h5 class="card-title">Order #{{ order.id }}</h5>
+
+    <p class="card-text">
+      <strong>Customer:</strong> {{ order.customer.first_name }} {{ order.customer.last_name }}
+    </p>
+
+
+    <p class="card-text">
+      <strong>Status:</strong> {{ order.get_status_display }}
+    </p>
+
+
+    <p class="card-text">
+      <strong>Products:</strong>
+      <ul>
+        {% for product in order.product.all %}
+          <li>{{ product.name }}</li>
+        {% endfor %}
+      </ul>
+    </p>
+
+
+    <div class="d-flex gap-2">
+      {% include 'core/actions.html' with edit_url=order.get_edit_url delete_url=order.get_delete_url %}
+      <a href="{% url 'orders:list' %}" class="btn btn-secondary">Back</a>
     </div>
+
+
+  </div>
 </div>
-
-<a class="btn btn-primary me-2" href="{% url 'orders:edit' order.pk %}">Edit</a>
-<a class="btn btn-danger me-2" href="{% url 'orders:delete' order.pk %}">Delete</a>
-<a class="btn btn-secondary" href="{% url 'orders:list' %}">Back to orders</a>
-
 {% endblock %}

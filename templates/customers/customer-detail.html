@@ -1,19 +1,38 @@
 {% extends 'core/base.html' %}
+{% load user_groups %}
+
 
 {% block content %}
+<h2>Customer Details</h2>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <h2 class="card-title">{{ customer.first_name }} {{ customer.last_name }}</h2>
-        <p class="card-text"><strong>Email:</strong> {{ customer.email }}</p>
-        <p class="card-text"><strong>Phone:</strong> {{ customer.phone }}</p>
-        <p class="card-text"><strong>Address:</strong> {{ customer.address }}</p>
-        <p class="card-text"><small class="text-muted">Created: {{ customer.created_at }} | Last Updated: {{ customer.updated_at }}</small></p>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+
+
+    <h5 class="card-title">
+      {{ customer.first_name }} {{ customer.last_name }}
+    </h5>
+
+
+    <p class="card-text">
+      <strong>Email:</strong> {{ customer.email }}
+    </p>
+
+
+    {% if customer.phone %}
+      <p class="card-text">
+        <strong>Phone:</strong> {{ customer.phone }}
+      </p>
+    {% endif %}
+
+
+    <div class="d-flex gap-2">
+      {% include 'core/actions.html' with edit_url=customer.get_edit_url delete_url=customer.get_delete_url %}
+      <a href="{% url 'customers:list' %}" class="btn btn-secondary">Back</a>
     </div>
+
+
+  </div>
 </div>
-
-<a class="btn btn-primary me-2" href="{% url 'customers:edit' customer.pk %}">Edit</a>
-<a class="btn btn-danger me-2" href="{% url 'customers:delete' customer.pk %}">Delete</a>
-<a class="btn btn-secondary" href="{% url 'customers:list' %}">Back to list</a>
-
 {% endblock %}

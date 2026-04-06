@@ -1,9 +1,12 @@
+{% load user_groups %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
+
 
         <a class="navbar-brand fw-bold" href="{% url 'home' %}">
             Contact Lenses App
         </a>
+
 
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse"
@@ -11,35 +14,64 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+
         <div class="collapse navbar-collapse" id="navbarNav">
+
 
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'products:list' %}">Products</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'customers:list' %}">Customers</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'orders:list' %}">Orders</a>
-                </li>
+                {% if user.is_authenticated %}
+                    {% if user|in_group:'Customer' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'customers:profile' %}">Profile</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'customers:list' %}">Customers</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'orders:list' %}">Orders</a>
+                    </li>
+                {% endif %}
             </ul>
+
 
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'products:create' %}">+ Product</a>
-                </li>
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'products:create' %}">+ Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'customers:create' %}">+ Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'orders:create' %}">+ Order</a>
+                        </li>
+                    {% endif %}
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'customers:create' %}">+ Customer</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'orders:create' %}">+ Order</a>
-                </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <form method="post" action="{% url 'logout' %}" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn btn-link text-white border-0 p-0"
+                                    style="vertical-align: baseline; font-weight: inherit;">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
             </ul>
+
 
         </div>
     </div>
