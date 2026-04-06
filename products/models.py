@@ -48,6 +48,9 @@ class Product(models.Model):
     def get_delete_url(self):
         return reverse('products:delete', kwargs={'pk': self.pk})
 
+    def get_absolute_url(self):
+        return reverse('products:detail', kwargs={'pk': self.pk})
+
 
     def __str__(self):
         return self.name

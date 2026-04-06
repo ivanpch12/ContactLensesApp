@@ -63,8 +63,6 @@ class CustomerProfileView(LoginRequiredMixin, UpdateView):
                 'email': self.request.user.email or '',
             }
         )
-        print('DEBUG: Customer obj:', obj, 'Created:', created)
-        return obj
 
     def get_success_url(self):
         return reverse_lazy('customers:profile')
