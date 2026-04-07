@@ -1,7 +1,12 @@
 # Contact Lenses App 👁️‍🗨️
 
-A Django web application to manage **products, customers, and orders** for a contact lens business.  
-The app provides full CRUD functionality, a **dashboard**, and a responsive interface using **Bootstrap 5**.
+A full-stack Django web application for managing a contact lens business, including products, customers, orders, and user-generated reviews.
+The app features authentication, role management, and is deployed on the cloud.
+
+---
+
+## 🌐 Live Demo
+👉 https://contactlensesapp-e9gyhyh4d7cvf4dk.francecentral-01.azurewebsites.net
 
 ---
 
@@ -11,11 +16,57 @@ The app provides full CRUD functionality, a **dashboard**, and a responsive inte
 - 🌐 Django 6.0.2+
 - 🗄️ PostgreSQL
 - 🎨 Bootstrap 5
+- ☁️ Microsoft Azure (App Service)
 - 🔧 Git & GitHub
 
 ---
 
-## 🚀 Installation
+## 🚀 Features
+
+### 🛒 Core Functionality
+
+- CRUD operations for Products, Customers, and Orders
+- Many-to-many relationship between Orders and Products
+- Clean and reusable templates
+
+### 👤Authentication & Authorization
+
+- Custom User model
+- Login / Logout functionality
+- User Groups (role-based access)
+- Protected views
+
+### ⭐ Reviews System
+
+- Users can leave reviews for products
+- Rating system (1–5 stars)
+- Average rating calculation per product
+
+### 📊 Dashboard
+
+- Overview of key metrics
+- Quick navigation to main sections
+
+### 🎨 UI/UX
+
+- Responsive design using Bootstrap 5
+- Reusable layout (navbar, footer, base template)
+- Custom 404 and 500 error pages
+
+---
+
+## ☁️ Deployment
+
+The application is deployed on Microsoft Azure App Service using:
+
+- Gunicorn (WSGI server)
+- Environment variables for configuration
+- PostgreSQL database
+- 
+---
+
+## ⚙️ Installation (Local Setup)
+
 
 ### 1️⃣ Clone the repository
 ```
@@ -60,6 +111,7 @@ Apply migrations
 ```
 python manage.py makemigrations
 python manage.py migrate
+python manage.py createsuperuser
 ```
 
 ---
@@ -73,19 +125,11 @@ Open <http://127.0.0.1:8000> in your browser.
 
 ---
 
-## ✨ Features
+## 📦 Static Files
 
-- 🛒 CRUD operations for Products, Customers, and Orders
+Before deployment:
 
-- 📊 Dashboard with total counts and quick links to each section
-
-- 📱 Responsive design using Bootstrap 5
-
-- ❌ Custom 404 error page
-
-- 🔁 Reusable templates with navigation, header, and footer partials
-
-- 📝 Forms with validations, help texts, placeholders, and read-only delete confirmation
+python manage.py collectstatic
 
 ---
 
@@ -99,29 +143,46 @@ Open <http://127.0.0.1:8000> in your browser.
 
 - 📂 orders – Order model (many-to-many with products), forms, views, templates
 
+---
+
+## 🔐 Roles & Permissions
+
+- Admin – full access via Django admin
+- Authenticated Users – can add reviews and interact with the system
+- Guests – read-only access
 
 ---
 
-## 📝 Notes
+## 🧪 Testing
 
-- ❗ Authentication is not implemented; login/logout functionality is excluded
+Basic manual testing via:
+- Django Admin
+- UI forms and validations
 
-- ❗ All pages are accessible via navigation links
+(Future: automated tests)
 
 ---
 
-## 🚧 Future Features / Roadmap
+## 🚧 Future Improvements
 
 #### ℹ️ This is an early-stage project with more planned improvements:
 
- - 🔑 Authentication and user management using Django's built-in User model
+- 🔍 Product search and filtering
 
-- 👓 Support for lens specifications such as diopters, colors, and types
+- 🛍️ Shopping cart functionality
 
-- 📦 Advanced product filtering and search
+- 📊 Advanced analytics dashboard
 
-- 🧾 Order history, invoices, and reports
+- 📦 Order tracking system
 
-- 🛠️ Admin enhancements with dashboards and analytics
+- 🌐 Multi-language support
 
-- 🌐 Optional multi-language support
+- 🧪 Unit & integration tests
+
+---
+
+## 📌 Notes
+
+- Environment variables are required for production
+- Static files are handled via collectstatic
+- Azure deployment uses Gunicorn
